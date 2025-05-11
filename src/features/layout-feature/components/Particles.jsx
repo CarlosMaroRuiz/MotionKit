@@ -1,4 +1,3 @@
-// src/features/layout/components/Particles.jsx
 import React from 'react';
 
 function Particles() {

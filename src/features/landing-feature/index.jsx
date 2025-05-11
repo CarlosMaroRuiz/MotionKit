@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import Stars from './components/Start';
-import Planet from './components/PlanetComponent';
 import BackgroundEffects from './components/BackgroundEffects';
 import HeroSection from './components/HeroSection';
 import StyleProvider from './providers/StyleProvider';
-import SpaceTransition from './components/SpaceTransition';
+import SpaceTransition from './components/space-transition';
+import PlanetSystem from './components/planet-system';
 
 const LandingPage = () => {
   // Referencias
@@ -42,6 +42,8 @@ const LandingPage = () => {
       <SpaceTransition 
         isActive={isTransitioning} 
         destination="/components" 
+        // Opcionalmente puedes personalizar el mensaje
+        // customMessage="Iniciando viaje a la plataforma"
         onTransitionComplete={handleTransitionComplete} 
       />
       
@@ -65,9 +67,9 @@ const LandingPage = () => {
             <HeroSection onStartTransition={handleStartTransition} />
           </div>
           
-          {/* Columna derecha - Planeta - Oculto en móviles, visible en md y superiores */}
+          {/* Columna derecha - Sistema Planetario - Oculto en móviles, visible en md y superiores */}
           <div className="hidden md:flex md:w-1/2 justify-center">
-            <Planet />
+            <PlanetSystem />
           </div>
         </div>
       </motion.div>
