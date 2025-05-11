@@ -1,0 +1,79 @@
+/* Contenedor principal de burbujas */
+.bubbles-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  /* Estilo base de la burbuja */
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(200, 120, 255, 0.3), rgba(120, 60, 200, 0.1));
+    box-shadow: 0 0 10px 2px rgba(138, 43, 226, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform-origin: center center;
+    will-change: transform;
+    animation: rise linear forwards;
+    z-index: 0;
+  }
+  
+  /* Tamaños de burbujas - usando valores fijos */
+  .size-2 { width: 1rem; height: 1rem; }
+  .size-3 { width: 1.25rem; height: 1.25rem; }
+  .size-4 { width: 1.5rem; height: 1.5rem; }
+  .size-5 { width: 1.75rem; height: 1.75rem; }
+  .size-6 { width: 2rem; height: 2rem; }
+  .size-7 { width: 2.25rem; height: 2.25rem; }
+  .size-8 { width: 2.5rem; height: 2.5rem; }
+  
+  /* Reflejo en la burbuja */
+  .bubble::after {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 35%;
+    height: 25%;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  
+  /* Animación de subida más suave y gradual */
+  @keyframes rise {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 0.2; /* Inicia con baja opacidad */
+    }
+    10% {
+      transform: translate(-10px, -10vh) rotate(-3deg) scale(1.05);
+      opacity: 0.6; /* Aparece gradualmente */
+    }
+    30% {
+      transform: translate(8px, -30vh) rotate(5deg) scale(1.1);
+      opacity: 0.8; /* Máxima visibilidad */
+    }
+    50% {
+      transform: translate(-5px, -50vh) rotate(-7deg) scale(1.15);
+      opacity: 0.7;
+    }
+    70% {
+      transform: translate(10px, -70vh) rotate(4deg) scale(1.1);
+      opacity: 0.6;
+    }
+    85% {
+      transform: translate(-8px, -85vh) rotate(-2deg) scale(1.05);
+      opacity: 0.4;
+    }
+    100% {
+      transform: translate(0, -100vh) rotate(0deg) scale(1);
+      opacity: 0; /* Desaparece al final */
+    }
+  }
+
+
+  
