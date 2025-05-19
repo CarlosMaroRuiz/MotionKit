@@ -16,7 +16,7 @@ const CodeExample = ({ code, language = "bash" }) => {
     });
   };
   
-  // Variantes para el contenedor
+  // Variantes para animaciones (mantenidas igual)
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,7 +28,6 @@ const CodeExample = ({ code, language = "bash" }) => {
     }
   };
   
-  // Variantes para cada línea de código
   const lineVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -37,7 +36,6 @@ const CodeExample = ({ code, language = "bash" }) => {
     }
   };
   
-  // Variantes para los caracteres (efecto terminal)
   const charVariants = {
     hidden: { opacity: 0, display: "none" },
     visible: {
@@ -47,7 +45,6 @@ const CodeExample = ({ code, language = "bash" }) => {
     }
   };
 
-  // Efecto de cursor terminal
   const cursorVariants = {
     blink: {
       opacity: [0, 1, 0],
@@ -59,7 +56,6 @@ const CodeExample = ({ code, language = "bash" }) => {
     }
   };
 
-  // Agregar un degradado sutil al fondo para dar profundidad
   const bgVariants = {
     hidden: {
       background: "linear-gradient(to right, #0f1015, #131419)"
@@ -70,7 +66,6 @@ const CodeExample = ({ code, language = "bash" }) => {
     }
   };
 
-  // Variantes para el botón de copiar
   const copyButtonVariants = {
     initial: { opacity: 0, scale: 0.8 },
     animate: { opacity: 1, scale: 1, transition: { delay: 1.5, duration: 0.3 } },
@@ -82,7 +77,6 @@ const CodeExample = ({ code, language = "bash" }) => {
     tap: { scale: 0.95 }
   };
 
-  // Variantes para la notificación de copiado
   const copiedNotificationVariants = {
     hidden: { opacity: 0, y: 10, scale: 0.8 },
     visible: { 
@@ -106,7 +100,8 @@ const CodeExample = ({ code, language = "bash" }) => {
 
   return (
     <motion.div 
-      className="bg-gray-950 rounded-md p-3 font-mono text-sm overflow-x-auto my-3 border border-gray-800 shadow-lg relative group"
+      className="w-full bg-gray-950 rounded-md p-2 sm:p-3 font-mono text-xs sm:text-sm 
+                 overflow-hidden my-2 sm:my-3 border border-gray-800 shadow-lg relative group max-w-full"
       variants={bgVariants}
       initial="hidden"
       animate="visible"
@@ -118,22 +113,22 @@ const CodeExample = ({ code, language = "bash" }) => {
     >
       {/* Decoración de terminal en la parte superior */}
       <motion.div 
-        className="flex items-center space-x-2 mb-2 pb-2 border-b border-gray-800/50"
+        className="flex items-center space-x-2 mb-1 sm:mb-2 pb-1 sm:pb-2 border-b border-gray-800/50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1, duration: 0.5 }}
       >
-        <div className="flex space-x-2">
-          <div className="w-3 h-3 rounded-full bg-red-500/70"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-500/70"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500/70"></div>
+        <div className="flex space-x-1 sm:space-x-2">
+          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500/70"></div>
+          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500/70"></div>
+          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500/70"></div>
         </div>
-        <div className="flex-1 text-center text-xs text-gray-500">terminal</div>
+        <div className="flex-1 text-center text-[10px] sm:text-xs text-gray-500">terminal</div>
         
         {/* Botón de copiar */}
         <motion.button
           onClick={copyToClipboard}
-          className="flex items-center space-x-1 px-2 py-1 rounded text-xs text-gray-400 bg-gray-800/40 hover:bg-purple-600/20 hover:text-gray-200 transition-colors"
+          className="flex items-center space-x-1 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded text-[10px] sm:text-xs text-gray-400 bg-gray-800/40 hover:bg-purple-600/20 hover:text-gray-200 transition-colors"
           variants={copyButtonVariants}
           initial="initial"
           animate="animate"
@@ -143,7 +138,7 @@ const CodeExample = ({ code, language = "bash" }) => {
         >
           <motion.svg 
             xmlns="http://www.w3.org/2000/svg" 
-            className="h-3.5 w-3.5" 
+            className="h-3 w-3 sm:h-3.5 sm:w-3.5" 
             viewBox="0 0 20 20" 
             fill="currentColor"
             animate={copied ? { scale: [1, 1.5, 1], rotate: [0, -10, 10, 0] } : {}}
@@ -170,7 +165,7 @@ const CodeExample = ({ code, language = "bash" }) => {
       <AnimatePresence>
         {copied && (
           <motion.div 
-            className="absolute top-12 right-3 bg-green-500/90 text-white px-3 py-1 rounded-md text-xs shadow-lg"
+            className="absolute top-10 sm:top-12 right-2 sm:right-3 bg-green-500/90 text-white px-2 sm:px-3 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs shadow-lg z-10"
             variants={copiedNotificationVariants}
             initial="hidden"
             animate="visible"
@@ -181,40 +176,67 @@ const CodeExample = ({ code, language = "bash" }) => {
         )}
       </AnimatePresence>
 
-      <motion.pre
-        className="relative"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {lines.length > 0 ? (
-          lines.map((line, lineIndex) => (
-            <motion.div 
-              key={lineIndex}
-              variants={lineVariants}
-              className="flex items-start"
-            >
-              {/* Prompt de terminal */}
-              <motion.span 
-                className="text-green-400 mr-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 * lineIndex, duration: 0.3 }}
+      {/* Contenedor del código con scroll horizontal controlado */}
+      <div className="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
+        <motion.pre
+          className="relative min-w-0"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {lines.length > 0 ? (
+            lines.map((line, lineIndex) => (
+              <motion.div 
+                key={lineIndex}
+                variants={lineVariants}
+                className="flex items-start whitespace-pre"
               >
-                $
-              </motion.span>
-              
-              {/* Código con efecto de escritura */}
-              <motion.code className={`language-${language} text-gray-300`}>
-                {Array.from(line).map((char, charIndex) => (
+                {/* Prompt de terminal */}
+                <motion.span 
+                  className="text-green-400 mr-2 flex-shrink-0"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 * lineIndex, duration: 0.3 }}
+                >
+                  $
+                </motion.span>
+                
+                {/* Código con efecto de escritura */}
+                <motion.code className={`language-${language} text-gray-300 break-normal`}>
+                  {Array.from(line).map((char, charIndex) => (
+                    <motion.span
+                      key={`${lineIndex}-${charIndex}`}
+                      variants={charVariants}
+                      transition={{ 
+                        delay: 0.2 * lineIndex + 0.02 * charIndex,
+                        duration: 0.01
+                      }}
+                      custom={charIndex}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </motion.code>
+                
+                {/* Cursor parpadeante */}
+                {lineIndex === lines.length - 1 && (
                   <motion.span
-                    key={`${lineIndex}-${charIndex}`}
+                    className="inline-block w-1.5 sm:w-2 h-3 sm:h-4 bg-purple-400 ml-1 flex-shrink-0"
+                    variants={cursorVariants}
+                    animate="blink"
+                  />
+                )}
+              </motion.div>
+            ))
+          ) : (
+            <motion.div variants={lineVariants} className="whitespace-pre">
+              <motion.span className="text-green-400 mr-2 flex-shrink-0">$</motion.span>
+              <motion.code className={`language-${language} text-gray-300`}>
+                {Array.from(code).map((char, charIndex) => (
+                  <motion.span
+                    key={charIndex}
                     variants={charVariants}
-                    transition={{ 
-                      delay: 0.2 * lineIndex + 0.02 * charIndex,
-                      duration: 0.01
-                    }}
-                    custom={charIndex}
+                    transition={{ delay: 0.02 * charIndex }}
                   >
                     {char}
                   </motion.span>
@@ -222,39 +244,15 @@ const CodeExample = ({ code, language = "bash" }) => {
               </motion.code>
               
               {/* Cursor parpadeante */}
-              {lineIndex === lines.length - 1 && (
-                <motion.span
-                  className="inline-block w-2 h-4 bg-purple-400 ml-1"
-                  variants={cursorVariants}
-                  animate="blink"
-                />
-              )}
+              <motion.span
+                className="inline-block w-1.5 sm:w-2 h-3 sm:h-4 bg-purple-400 ml-1 flex-shrink-0"
+                variants={cursorVariants}
+                animate="blink"
+              />
             </motion.div>
-          ))
-        ) : (
-          <motion.div variants={lineVariants}>
-            <motion.span className="text-green-400 mr-2">$</motion.span>
-            <motion.code className={`language-${language} text-gray-300`}>
-              {Array.from(code).map((char, charIndex) => (
-                <motion.span
-                  key={charIndex}
-                  variants={charVariants}
-                  transition={{ delay: 0.02 * charIndex }}
-                >
-                  {char}
-                </motion.span>
-              ))}
-            </motion.code>
-            
-            {/* Cursor parpadeante */}
-            <motion.span
-              className="inline-block w-2 h-4 bg-purple-400 ml-1"
-              variants={cursorVariants}
-              animate="blink"
-            />
-          </motion.div>
-        )}
-      </motion.pre>
+          )}
+        </motion.pre>
+      </div>
       
       {/* Efecto de flash al copiar */}
       <AnimatePresence>

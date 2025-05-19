@@ -4,7 +4,7 @@ import InfoCard from '../InfoCard';
 import CodeExample from '../CodeExample';
 
 const DependenciesSection = () => {
-  // Variantes para animar elementos
+  // Variantes para animar elementos (mantenidas igual)
   const contentVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -67,7 +67,7 @@ const DependenciesSection = () => {
   return (
     <InfoCard
       title="Dependencias"
-      icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
       </svg>}
       delay={0.2}
@@ -76,6 +76,7 @@ const DependenciesSection = () => {
         variants={contentVariants}
         initial="hidden"
         animate="visible"
+        className="w-full text-sm sm:text-base"
       >
         <motion.p 
           variants={itemVariants}
@@ -84,16 +85,16 @@ const DependenciesSection = () => {
           Para utilizar Motion Kit, necesitas instalar:
         </motion.p>
         
-        <motion.div variants={itemVariants}>
+        <motion.div variants={itemVariants} className="w-full">
           <motion.h4 
-            className="text-white font-medium mt-4 mb-2 flex items-center"
+            className="text-white font-medium mt-3 sm:mt-4 mb-1.5 sm:mb-2 flex items-center text-sm sm:text-base"
             variants={sectionTitleVariants}
           >
             <motion.span
               initial={{ width: 0 }}
-              animate={{ width: "3px", height: "16px" }}
+              animate={{ width: "2px", height: "14px" }}
               transition={{ delay: 0.5, duration: 0.3 }}
-              className="bg-purple-500 mr-2 rounded-full"
+              className="bg-purple-500 mr-1.5 sm:mr-2 rounded-full sm:w-[3px] sm:h-[16px] flex-shrink-0"
             />
             Framer Motion
           </motion.h4>
@@ -101,21 +102,22 @@ const DependenciesSection = () => {
             variants={itemVariants}
             whileHover={{ scale: 1.01 }}
             transition={{ type: "spring", stiffness: 400 }}
+            className="w-full"
           >
             <CodeExample code="npm install framer-motion" />
           </motion.div>
         </motion.div>
         
-        <motion.div variants={itemVariants}>
+        <motion.div variants={itemVariants} className="w-full">
           <motion.h4 
-            className="text-white font-medium mt-4 mb-2 flex items-center"
+            className="text-white font-medium mt-3 sm:mt-4 mb-1.5 sm:mb-2 flex items-center text-sm sm:text-base"
             variants={sectionTitleVariants}
           >
             <motion.span
               initial={{ width: 0 }}
-              animate={{ width: "3px", height: "16px" }}
+              animate={{ width: "2px", height: "14px" }}
               transition={{ delay: 0.8, duration: 0.3 }}
-              className="bg-purple-500 mr-2 rounded-full"
+              className="bg-purple-500 mr-1.5 sm:mr-2 rounded-full sm:w-[3px] sm:h-[16px] flex-shrink-0"
             />
             Tailwind CSS
           </motion.h4>
@@ -123,6 +125,7 @@ const DependenciesSection = () => {
             variants={itemVariants}
             whileHover={{ scale: 1.01 }}
             transition={{ type: "spring", stiffness: 400 }}
+            className="w-full"
           >
             <CodeExample code="npm install -D tailwindcss postcss autoprefixer
 npx tailwindcss init -p" />
@@ -130,7 +133,7 @@ npx tailwindcss init -p" />
         </motion.div>
         
         <motion.p 
-          className="mt-4 text-gray-300"
+          className="mt-3 sm:mt-4 text-gray-300 text-xs sm:text-sm md:text-base break-words"
           variants={itemVariants}
         >
           Asegúrate de configurar correctamente Tailwind CSS en tu proyecto siguiendo la
@@ -138,7 +141,7 @@ npx tailwindcss init -p" />
             href="https://tailwindcss.com/docs/installation"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-purple-400 ml-1 relative hover:text-purple-300"
+            className="text-purple-400 ml-1 relative hover:text-purple-300 inline-block"
             variants={linkVariants}
             whileHover="hover"
           >
@@ -154,7 +157,7 @@ npx tailwindcss init -p" />
         
         {/* Indicador de dependencias completas */}
         <motion.div
-          className="flex items-center mt-4 text-green-400 text-xs"
+          className="flex items-center mt-3 sm:mt-4 text-green-400 text-[10px] sm:text-xs"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2, duration: 0.5 }}
@@ -168,9 +171,9 @@ npx tailwindcss init -p" />
               stiffness: 500,
               damping: 10
             }}
-            className="mr-2"
+            className="mr-1 sm:mr-2 flex-shrink-0"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
             </svg>
           </motion.div>
