@@ -3,6 +3,7 @@ import Layout from './features/layout-feature';
 
 import Home from './features/home';
 import ButtonsView from './features/buttons';
+import CardsView from './features/cards'; // Nueva importación
 import ModalsView from './features/modals';
 import AlertsView from './features/alerts';
 import CountersView from './features/counters';
@@ -21,6 +22,7 @@ const routes = [
     children: [
       { index: true, element: <Home /> },
       { path: 'buttons', element: <ButtonsView /> },
+      { path: 'cards', element: <CardsView /> }, // Nueva ruta
       { path: 'modals', element: <ModalsView /> },
       { path: 'alerts', element: <AlertsView /> },
       { path: 'counters', element: <CountersView /> },

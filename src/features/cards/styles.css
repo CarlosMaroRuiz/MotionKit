@@ -1,0 +1,111 @@
+/* Estilos para efectos 3D en FlipCard */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Mejoras para el scroll personalizado en ExpandableCard */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(75, 85, 99, 0.1);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Efecto de resplandor para las cards */
+.card-glow {
+  box-shadow: 
+    0 0 20px rgba(139, 92, 246, 0.1),
+    0 4px 32px rgba(0, 0, 0, 0.2);
+}
+
+.card-glow:hover {
+  box-shadow: 
+    0 0 30px rgba(139, 92, 246, 0.2),
+    0 8px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Animación de gradiente para fondos dinámicos */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animated-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* Efectos para partículas */
+.particle-trail {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(1px);
+}
+
+/* Utilidades para mejor rendimiento */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Sombras dinámicas para depth */
+.depth-shadow-sm {
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 0 8px rgba(139, 92, 246, 0.05);
+}
+
+.depth-shadow-md {
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    0 0 16px rgba(139, 92, 246, 0.1);
+}
+
+.depth-shadow-lg {
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 0 24px rgba(139, 92, 246, 0.15);
+}
+
+/* Estilos para mejor accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .perspective-1000,
+  .preserve-3d,
+  .animated-gradient,
+  .particle-trail {
+    animation: none;
+    transition: none;
+  }
+  
+  .backface-hidden {
+    backface-visibility: visible;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .perspective-1000 {
+    perspective: 600px;
+  }
+}
