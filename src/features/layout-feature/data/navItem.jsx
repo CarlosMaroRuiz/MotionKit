@@ -28,7 +28,7 @@ export const navItems = [
     ) 
   },
   { 
-    path: '/components/modals', // ✅ Ruta actualizada y funcional
+    path: '/components/modals', 
     label: 'Modales', 
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -38,7 +38,7 @@ export const navItems = [
     badge: { text: 'Nuevo', color: 'green' } // ✅ Badge indicando que es nuevo
   },
   { 
-    path: '/alerts', 
+    path: '/components/alerts', 
     label: 'Alertas', 
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -47,7 +47,7 @@ export const navItems = [
     ) 
   },
   { 
-    path: '/tooltips', 
+    path: '/components/tooltips', 
     label: 'Tooltips', 
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -58,7 +58,7 @@ export const navItems = [
     badge: { text: 'Premium', color: 'purple' } 
   },
   { 
-    path: '/counters', 
+    path: '/components/counters', 
     label: 'Contadores', 
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -67,7 +67,7 @@ export const navItems = [
     ) 
   },
   { 
-    path: '/navigation', 
+    path: '/components/navigation', 
     label: 'Navegación', 
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -76,7 +76,7 @@ export const navItems = [
     ) 
   },
   { 
-    path: '/forms', 
+    path: '/components/forms', 
     label: 'Formularios', 
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
