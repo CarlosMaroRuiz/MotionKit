@@ -72,7 +72,7 @@ const HeroSection = ({ onStartTransition }) => {
           Ir a la plataforma
         </GradientButton>
         
-        <SecondaryButton href="/examples">
+        <SecondaryButton href="/components">
           <motion.span
             animate={{ 
               rotate: [0, 10, 0, -10, 0],
