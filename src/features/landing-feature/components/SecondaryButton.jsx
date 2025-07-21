@@ -1,14 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
-const SecondaryButton = ({ 
-  children, 
-  href, 
+const SecondaryButton = ({
+  children,
+  href = "#",
   className = "",
   delay = 1,
-  shadow = "shadow-indigo-900/30"
+  shadow = "shadow-indigo-900/30",
+  isExternal = false
 }) => {
-  
   const button2Variants = {
     hidden: { opacity: 0, y: 20, scale: 0.9 },
     visible: {
@@ -16,12 +17,12 @@ const SecondaryButton = ({
       y: 0,
       scale: 1,
       transition: {
-        delay: delay,
+        delay,
         duration: 0.5,
         type: "spring",
         stiffness: 500,
-        damping: 25
-      }
+        damping: 25,
+      },
     },
     hover: {
       scale: 1.05,
@@ -30,19 +31,18 @@ const SecondaryButton = ({
       transition: {
         duration: 0.2,
         type: "spring",
-        stiffness: 500
-      }
+        stiffness: 500,
+      },
     },
     tap: {
       scale: 0.97,
       y: 0,
       boxShadow: "0 0 10px rgba(99, 102, 241, 0.3)",
-    }
+    },
   };
-  
-  return (
-    <motion.a
-      href={href} 
+
+  const content = (
+    <motion.div
       className={`w-full sm:w-auto px-8 py-4 bg-gray-800/70 rounded-full text-gray-300 font-medium border border-purple-900/20 font-inter backdrop-blur-sm ${className} flex justify-center items-center`}
       variants={button2Variants}
       initial="hidden"
@@ -50,11 +50,19 @@ const SecondaryButton = ({
       whileHover="hover"
       whileTap="tap"
     >
-      <span className="relative z-10">
-        {children}
-      </span>
-    </motion.a>
+      <span className="relative z-10">{children}</span>
+    </motion.div>
   );
+
+  if (isExternal || href.startsWith("http")) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {content}
+      </a>
+    );
+  }
+
+  return <Link to={href}>{content}</Link>;
 };
 
 export default SecondaryButton;
