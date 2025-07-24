@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import ComponentCard from '../../shared/ComponentCard';
+import LoadingSpinner from '../../shared/components/LoadingSpinner';
 import { 
   ParticleButton, 
   MorphButton, 
@@ -9,17 +10,62 @@ import {
   SubmitButton,
   particleButtonJSX,
   particleButtonJS,
-  morphButtonJSX,
-  morphButtonJS,
-  magneticButtonJSX,
-  magneticButtonJS,
   deleteButtonJSX,
   deleteButtonJS,
   submitButtonJSX,
   submitButtonJS
 } from './components';
+import { useFetchComponents } from '../../shared/hooks/useFetchComponents';
 
 const ButtonsView = () => {
+  const { components, loading, error } = useFetchComponents('button', [4, 5]);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto min-h-[60vh] flex items-center justify-center">
+        <LoadingSpinner 
+          message="Cargando componentes de botones..." 
+          size="large"
+        />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto py-8">
+        <motion.div 
+          className="bg-red-500/20 border border-red-500/30 rounded-lg p-6 text-center"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            className="text-red-400 text-4xl mb-4"
+            animate={{ rotate: [0, -5, 5, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            ⚠️
+          </motion.div>
+          <h3 className="text-red-400 text-xl font-semibold mb-2">
+            Error al cargar componentes
+          </h3>
+          <p className="text-red-300">
+            {error}
+          </p>
+          <motion.button
+            className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => window.location.reload()}
+          >
+            Reintentar
+          </motion.button>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto py-8">
       <header className="mb-10">
@@ -74,8 +120,8 @@ const ButtonsView = () => {
           title="Botón con Transformación Morfológica"
           description="Este botón cambia su forma, color y contenido al hacer clic, con animaciones fluidas de transformación."
           component={<MorphButton />}
-          jsxCode={morphButtonJSX}
-          animationCode={morphButtonJS}
+          jsxCode={components[0]?.jsxCode || '// Código JSX no disponible'}
+          animationCode={components[0]?.animationCode || '// Código de animación no disponible'}
         />
 
         {/* Botón Magnético */}
@@ -83,8 +129,8 @@ const ButtonsView = () => {
           title="Botón con Efecto Magnético"
           description="Un botón que reacciona a la posición del cursor, creando un efecto magnético que sigue el movimiento del mouse."
           component={<MagneticButton />}
-          jsxCode={magneticButtonJSX}
-          animationCode={magneticButtonJS}
+          jsxCode={components[1]?.jsxCode || '// Código JSX no disponible'}
+          animationCode={components[1]?.animationCode || '// Código de animación no disponible'}
         />
       </div>
     </div>
