@@ -101,7 +101,7 @@ const RegisterPage = () => {
       }
       
       // Redirección automática a /components después del registro exitoso
-      navigate('/components', { replace: true });
+      navigate('/login', { replace: true });
       
     } catch (err) {
       console.error('Error en registro:', err);

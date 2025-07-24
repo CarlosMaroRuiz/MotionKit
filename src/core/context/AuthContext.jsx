@@ -1,7 +1,6 @@
 // src/contexts/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { registerUser } from '../../features/login/services/servicesLogin';
-import { loginUser } from '../../features/login/services/servicesLogin';
+import { registerUser, loginUser } from '../../features/login/services/servicesLogin';
 
 const AuthContext = createContext();
 
@@ -30,30 +29,29 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // Función de login usando API real y fallback
+  // Función de login usando solo API real (sin fallback)
   const login = async (email, password) => {
     setLoading(true);
     
     try {
       console.log('Iniciando login para:', email);
       
-      // Usar el servicio de login que incluye API y fallback
+      // Usar el servicio de login de la API real
       const result = await loginUser(email, password);
       
-      console.log('Login exitoso:', result.usedFallback ? '(usando fallback)' : '(usando API)');
+      console.log('Login exitoso');
       
-      // Configurar usuario en el estado
+      // Configurar usuario en el estado - guardando token completo
       const userData = {
         id: result.user.id,
         email: result.user.email,
         name: result.user.name,
         avatar: result.user.avatar,
-        token: result.user.token,
+        token: result.user.token, // Token completo
         role: result.user.role,
         loginTime: result.user.loginTime,
         isRegistered: result.user.isRegistered,
-        isAPIUser: result.user.isAPIUser,
-        usedFallback: result.usedFallback || false
+        isAPIUser: true
       };
       
       setUser(userData);
@@ -81,16 +79,16 @@ export const AuthProvider = ({ children }) => {
       
       console.log('Registro exitoso:', result);
       
-      // Configurar usuario en el estado
+      // Configurar usuario en el estado - guardando token completo
       const userData = {
         id: result.user.id,
         email: result.user.email,
         name: result.user.name,
         avatar: result.user.avatar,
-        token: result.user.token,
+        token: result.user.token, // Token completo
         loginTime: result.user.loginTime,
         isRegistered: true,
-        isAPIUser: true // Marcar como usuario de API
+        isAPIUser: true
       };
       
       setUser(userData);

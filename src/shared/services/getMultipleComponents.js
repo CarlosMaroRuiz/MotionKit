@@ -7,8 +7,7 @@ export const getMultipleComponents = async (type, ids) => {
     if (!token) {
       throw new Error('No hay token de autenticación disponible');
     }
-
-    console.log('🔐 Usando token:', token.substring(0, 20) + '...'); // Log parcial por seguridad
+  
 
     const promises = ids.map(async (id) => {
       const endpoint = `components/search?type=${type}&id=${id}`;
@@ -19,7 +18,7 @@ export const getMultipleComponents = async (type, ids) => {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': `Bearer ${token}` 
+          'token': token
         }
       });
 
@@ -31,7 +30,7 @@ export const getMultipleComponents = async (type, ids) => {
     });
 
     const results = await Promise.all(promises);
-    
+
     return results.map((data, index) => ({
       id: ids[index],
       animationCode: data.animationCode,

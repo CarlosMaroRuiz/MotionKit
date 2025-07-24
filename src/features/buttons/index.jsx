@@ -120,8 +120,8 @@ const ButtonsView = () => {
           title="Botón con Transformación Morfológica"
           description="Este botón cambia su forma, color y contenido al hacer clic, con animaciones fluidas de transformación."
           component={<MorphButton />}
-          jsxCode={components[0]?.jsxCode || '// Código JSX no disponible'}
-          animationCode={components[0]?.animationCode || '// Código de animación no disponible'}
+          jsxCode={components[0]?.jsxCode }
+          animationCode={components[0]?.animationCode}
         />
 
         {/* Botón Magnético */}
@@ -129,8 +129,8 @@ const ButtonsView = () => {
           title="Botón con Efecto Magnético"
           description="Un botón que reacciona a la posición del cursor, creando un efecto magnético que sigue el movimiento del mouse."
           component={<MagneticButton />}
-          jsxCode={components[1]?.jsxCode || '// Código JSX no disponible'}
-          animationCode={components[1]?.animationCode || '// Código de animación no disponible'}
+          jsxCode={components[1]?.jsxCode }
+          animationCode={components[1]?.animationCode}
         />
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import PayButton from './components/PayButton';
 
 const ComponentCard = ({ 
   title, 
@@ -12,6 +13,9 @@ const ComponentCard = ({
 }) => {
   const [activeTab, setActiveTab] = useState('preview');
   const [copied, setCopied] = useState(false);
+
+  const hasJsxCode = jsxCode !== null;
+  const hasAnimationCode = animationCode !== null;
   
   // Animaciones simplificadas
   const tabVariants = {
@@ -25,6 +29,11 @@ const ComponentCard = ({
     },
     hover: {
       opacity: 1
+    },
+    disabled: {
+      opacity: 0.5,
+      color: "#6B7280",
+      cursor: "not-allowed"
     }
   };
 
@@ -49,6 +58,12 @@ const ComponentCard = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Cambiar a la pestaña sin restricción (para permitir mostrar el botón de pago)
+  const handleTabChange = (tab) => {
+    // Permitir siempre el cambio de pestaña, incluso si no hay código disponible
+    setActiveTab(tab);
+  };
+
   // Renderiza el contenido según la pestaña activa
   const renderContent = () => {
     return (
@@ -68,7 +83,7 @@ const ComponentCard = ({
           </motion.div>
         )}
         
-        {activeTab === 'jsx' && (
+        {activeTab === 'jsx' && hasJsxCode && (
           <motion.div 
             key="jsx"
             className="relative"
@@ -129,7 +144,26 @@ const ComponentCard = ({
           </motion.div>
         )}
         
-        {activeTab === 'js' && (
+        {activeTab === 'jsx' && !hasJsxCode && (
+          <motion.div 
+            key="jsx-subscribe"
+            variants={contentVariants}
+            initial="exit"
+            animate="enter"
+            exit="exit"
+            className="flex flex-col items-center justify-center py-10 px-4"
+          >
+            <div className="text-center mb-6">
+              <h3 className="text-white text-lg font-medium mb-2">Código JSX no disponible</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                Este componente requiere una suscripción para acceder al código fuente.
+              </p>
+            </div>
+            <PayButton />
+          </motion.div>
+        )}
+        
+        {activeTab === 'js' && hasAnimationCode && (
           <motion.div 
             key="js"
             className="relative"
@@ -189,6 +223,25 @@ const ComponentCard = ({
             </div>
           </motion.div>
         )}
+        
+        {activeTab === 'js' && !hasAnimationCode && (
+          <motion.div 
+            key="js-subscribe"
+            variants={contentVariants}
+            initial="exit"
+            animate="enter"
+            exit="exit"
+            className="flex flex-col items-center justify-center py-10 px-4"
+          >
+            <div className="text-center mb-6">
+              <h3 className="text-white text-lg font-medium mb-2">Código de animaciones no disponible</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                Este componente requiere una suscripción para acceder al código de animaciones.
+              </p>
+            </div>
+            <PayButton />
+          </motion.div>
+        )}
       </AnimatePresence>
     );
   };
@@ -216,43 +269,76 @@ const ComponentCard = ({
 
       {/* Tabs */}
       <div className="flex overflow-x-auto border-b border-gray-800 relative scrollbar-hide">
-        {["preview", "jsx", "js"].map((tab) => (
-          <motion.button
-            key={tab}
-            className={`px-3 py-2 sm:px-4 md:px-5 sm:py-3 text-xs sm:text-sm font-medium relative flex-shrink-0 ${activeTab === tab ? 'text-purple-400' : 'text-gray-400'}`}
-            onClick={() => setActiveTab(tab)}
-            variants={tabVariants}
-            initial="inactive"
-            animate={activeTab === tab ? 'active' : 'inactive'}
-            whileHover="hover"
-          >
-            <div className="flex items-center gap-1 sm:gap-2">
-              {tab === 'preview' && (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                  <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                </svg>
-              )}
-              {tab === 'jsx' && (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              )}
-              {tab === 'js' && (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-                </svg>
-              )}
-              <span className="whitespace-nowrap">
-                {tab === 'preview' ? 'Vista previa' : 
-                  tab === 'jsx' ? 'JSX / HTML' : 
-                  'Animaciones JS'}
-              </span>
-            </div>
-            
-            {activeTab === tab && <ActiveTabIndicator />}
-          </motion.button>
-        ))}
+        {/* Pestaña de Vista Previa */}
+        <motion.button
+          key="preview"
+          className="px-3 py-2 sm:px-4 md:px-5 sm:py-3 text-xs sm:text-sm font-medium relative flex-shrink-0"
+          onClick={() => handleTabChange('preview')}
+          variants={tabVariants}
+          initial="inactive"
+          animate={activeTab === 'preview' ? 'active' : 'inactive'}
+          whileHover="hover"
+        >
+          <div className="flex items-center gap-1 sm:gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+            </svg>
+            <span className="whitespace-nowrap">Vista previa</span>
+          </div>
+          
+          {activeTab === 'preview' && <ActiveTabIndicator />}
+        </motion.button>
+        
+        {/* Pestaña de JSX */}
+        <motion.button
+          key="jsx"
+          className={`px-3 py-2 sm:px-4 md:px-5 sm:py-3 text-xs sm:text-sm font-medium relative flex-shrink-0 cursor-pointer`}
+          onClick={() => handleTabChange('jsx')}
+          variants={tabVariants}
+          initial={!hasJsxCode ? "inactive" : "inactive"}
+          animate={activeTab === 'jsx' ? 'active' : 'inactive'}
+          whileHover={!hasJsxCode ? "hover" : "hover"}
+        >
+          <div className="flex items-center gap-1 sm:gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+            </svg>
+            <span className="whitespace-nowrap">JSX / HTML</span>
+            {!hasJsxCode && (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+              </svg>
+            )}
+          </div>
+          
+          {activeTab === 'jsx' && <ActiveTabIndicator />}
+        </motion.button>
+        
+        {/* Pestaña de Animaciones JS */}
+        <motion.button
+          key="js"
+          className={`px-3 py-2 sm:px-4 md:px-5 sm:py-3 text-xs sm:text-sm font-medium relative flex-shrink-0 cursor-pointer`}
+          onClick={() => handleTabChange('js')}
+          variants={tabVariants}
+          initial={!hasAnimationCode ? "inactive" : "inactive"}
+          animate={activeTab === 'js' ? 'active' : 'inactive'}
+          whileHover={!hasAnimationCode ? "hover" : "hover"}
+        >
+          <div className="flex items-center gap-1 sm:gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+            </svg>
+            <span className="whitespace-nowrap">Animaciones JS</span>
+            {!hasAnimationCode && (
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+              </svg>
+            )}
+          </div>
+          
+          {activeTab === 'js' && <ActiveTabIndicator />}
+        </motion.button>
       </div>
 
       {/* Content */}

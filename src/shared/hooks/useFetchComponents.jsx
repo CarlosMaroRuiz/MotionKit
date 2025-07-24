@@ -11,6 +11,7 @@ export const useFetchComponents = (type, ids) => {
       try {
         const fetchedComponents = await getMultipleComponents(type, ids);
         setComponents(fetchedComponents);
+
         setLoading(false);
       } catch (err) {
         setError('No se pudieron cargar los componentes');
