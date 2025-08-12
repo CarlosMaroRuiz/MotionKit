@@ -2,7 +2,7 @@ export const installationSteps = [
   {
     number: "01",
     title: "Instalar Tailwind CSS",
-    description: "Instala tailwindcss y @tailwindcss/vite mediante npm.",
+    description: "Instala tailwindcss y @tailwindcss/vite mediante npm",
     code: "npm install tailwindcss @tailwindcss/vite"
   },
   {
