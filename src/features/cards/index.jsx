@@ -1,18 +1,7 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import ComponentCard from '../../shared/ComponentCard';
 import './styles.css';
-import { 
-  FlipCard, 
-  ExpandableCard,
-  SneakerCard,
-  flipCardJSX,
-  flipCardJS,
-  expandableCardJSX,
-  expandableCardJS,
-  sneakerCardJSX,
-  sneakerCardJS
-} from './components';
+import { CARDS_COLLECTION } from './cards.data';
 
 const CardsView = () => {
   return (
@@ -37,32 +26,16 @@ const CardsView = () => {
       </header>
 
       <div className="grid grid-cols-1 gap-10">
-        {/* Card de Producto/Tenis */}
-        <ComponentCard
-          title="Card de Producto Premium para Tenis"
-          description="Una impresionante card de producto para tenis con animaciones 3D, efectos de partículas de velocidad, explosiones de carrito y interacciones avanzadas de e-commerce."
-          component={<SneakerCard />}
-          jsxCode={sneakerCardJSX}
-          animationCode={sneakerCardJS}
-        />
-
-        {/* Card con Efecto Flip */}
-        <ComponentCard
-          title="Card con Efecto Flip 3D"
-          description="Una card interactiva que se voltea en 3D para revelar contenido adicional. Incluye animaciones de partículas y efectos de hover suaves."
-          component={<FlipCard />}
-          jsxCode={flipCardJSX}
-          animationCode={flipCardJS}
-        />
-
-        {/* Card Expandible */}
-        <ComponentCard
-          title="Card Expandible con Partículas"
-          description="Card que se expande dinámicamente mostrando contenido adicional con efectos de partículas, ondas de expansión y animaciones fluidas."
-          component={<ExpandableCard />}
-          jsxCode={expandableCardJSX}
-          animationCode={expandableCardJS}
-        />
+        {CARDS_COLLECTION.map((card) => (
+          <ComponentCard
+            key={card.id}
+            title={card.title}
+            description={card.description}
+            component={card.component}
+            jsxCode={card.jsxCode}
+            animationCode={card.animationCode}
+          />
+        ))}
       </div>
     </div>
   );

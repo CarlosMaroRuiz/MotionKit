@@ -1,23 +1,6 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import ComponentCard from '../../shared/ComponentCard';
-import { 
-  ParticleButton, 
-  MorphButton, 
-  MagneticButton,
-  DeleteButton,
-  SubmitButton,
-  particleButtonJSX,
-  particleButtonJS,
-  morphButtonJSX,
-  morphButtonJS,
-  magneticButtonJSX,
-  magneticButtonJS,
-  deleteButtonJSX,
-  deleteButtonJS,
-  submitButtonJSX,
-  submitButtonJS
-} from './components';
+import { BUTTONS_COLLECTION } from './buttons.data';
 
 const ButtonsView = () => {
   return (
@@ -42,50 +25,16 @@ const ButtonsView = () => {
       </header>
 
       <div className="grid grid-cols-1 gap-10">
-        {/* Botón de Enviar Formulario */}
-        <ComponentCard
-          title="Botón de Enviar Formulario"
-          description="Botón interactivo para formularios con estados de carga, éxito y error. Proporciona feedback visual del estado del envío."
-          component={<SubmitButton />}
-          jsxCode={submitButtonJSX}
-          animationCode={submitButtonJS}
-        />
-
-        {/* Botón de Eliminar */}
-        <ComponentCard
-          title="Botón de Eliminación con Efectos Avanzados"
-          description="Un impresionante botón de eliminar con múltiples estados, confirmación visual, efectos de partículas y desintegración."
-          component={<DeleteButton />}
-          jsxCode={deleteButtonJSX}
-          animationCode={deleteButtonJS}
-        />
-
-        {/* Botón con Explosión de Partículas */}
-        <ComponentCard
-          title="Botón con Explosión de Partículas"
-          description="Un botón que dispara partículas coloridas cuando se hace clic en él, creando un efecto visual impactante."
-          component={<ParticleButton />}
-          jsxCode={particleButtonJSX}
-          animationCode={particleButtonJS}
-        />
-
-        {/* Botón con Morfismo */}
-        <ComponentCard
-          title="Botón con Transformación Morfológica"
-          description="Este botón cambia su forma, color y contenido al hacer clic, con animaciones fluidas de transformación."
-          component={<MorphButton />}
-          jsxCode={morphButtonJSX}
-          animationCode={morphButtonJS}
-        />
-
-        {/* Botón Magnético */}
-        <ComponentCard
-          title="Botón con Efecto Magnético"
-          description="Un botón que reacciona a la posición del cursor, creando un efecto magnético que sigue el movimiento del mouse."
-          component={<MagneticButton />}
-          jsxCode={magneticButtonJSX}
-          animationCode={magneticButtonJS}
-        />
+        {BUTTONS_COLLECTION.map((button) => (
+          <ComponentCard
+            key={button.id}
+            title={button.title}
+            description={button.description}
+            component={button.component}
+            jsxCode={button.jsxCode}
+            animationCode={button.animationCode}
+          />
+        ))}
       </div>
     </div>
   );

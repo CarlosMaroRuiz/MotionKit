@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
-import Bubbles from '../layout-feature/components/bublee';
+import Bubbles from '../../core/ui/layout/components/bublee';
 
 const NotFound = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });

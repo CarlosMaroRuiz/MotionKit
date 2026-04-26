@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from './features/layout-feature';
+import Layout from './core/ui/layout';
 
 import Home from './features/home';
 import ButtonsView from './features/buttons';

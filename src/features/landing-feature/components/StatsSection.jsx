@@ -1,5 +1,5 @@
 import React from 'react';
-import StatItem from './StatItem';
+import AnimatedCounter from '../../../shared/ui/AnimatedCounter';
 
 const StatsSection = () => {
   const stats = [
@@ -11,7 +11,7 @@ const StatsSection = () => {
   return (
     <div className="flex flex-wrap justify-center md:justify-start gap-8 md:gap-12 lg:gap-16">
       {stats.map((stat) => (
-        <StatItem 
+        <AnimatedCounter 
           key={stat.index}
           value={stat.value}
           label={stat.label}

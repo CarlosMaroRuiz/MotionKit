@@ -1,32 +1,33 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 const DustParticle = ({ size, angle, radius, speed, opacity }) => {
-  const angleRad = (angle * Math.PI) / 180;
-  
   return (
     <motion.div
-      className="absolute top-1/2 left-1/2 rounded-full bg-purple-200"
+      className="absolute top-1/2 left-1/2"
       style={{
-        width: size,
-        height: size,
-        transform: `translate(-50%, -50%) rotateX(75deg)`,
-        boxShadow: size > 1.3 ? `0 0 ${size * 3}px rgba(216, 180, 254, ${opacity})` : 'none',
-        opacity
+        width: radius * 2,
+        height: radius * 2,
+        x: "-50%",
+        y: "-50%",
+        rotateX: 75,
+        willChange: "transform"
       }}
-      animate={{
-        rotate: 360
-      }}
-      transition={{
-        duration: speed,
-        repeat: Infinity,
-        ease: "linear"
-      }}
-      initial={{
-        left: `calc(50% + ${radius * Math.cos(angleRad)}px)`,
-        top: `calc(50% + ${radius * Math.sin(angleRad) * 0.3}px)`
-      }}
-    />
+      animate={{ rotateZ: [angle, angle + 360] }}
+      transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+    >
+      <div
+        className="absolute rounded-full bg-purple-100"
+        style={{
+          width: size,
+          height: size,
+          top: 0,
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          boxShadow: size > 1.3 ? `0 0 ${size * 3}px rgba(216,180,254,${opacity + 0.2})` : 'none',
+          opacity
+        }}
+      />
+    </motion.div>
   );
 };
 

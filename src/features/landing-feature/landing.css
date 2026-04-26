@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ── Fonts ── */
+.font-poppins { font-family: 'Poppins', sans-serif; }
+.font-inter   { font-family: 'Inter', sans-serif; }
+
+/* ── Root Layout ── */
+.landing-root {
+  min-height: 100vh;
+  width: 100%;
+  background: #0a0118;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Floating Navbar ── */
+.landing-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  padding: 0.75rem 1.5rem;
+  background: rgba(10, 1, 24, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(147, 51, 234, 0.12);
+}
+
+.landing-nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.landing-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.landing-logo-link:hover { opacity: 0.85; }
+
+.landing-logo-img {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+.landing-logo-text {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.landing-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.landing-nav-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.landing-nav-link:hover { color: #c084fc; }
+
+.landing-nav-cta {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.45rem 1.2rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #7c3aed, #a855f7);
+  box-shadow: 0 0 18px rgba(147, 51, 234, 0.35);
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+.landing-nav-cta:hover {
+  box-shadow: 0 0 28px rgba(147, 51, 234, 0.55);
+  transform: translateY(-1px);
+}
+
+/* ── Content Grid ── */
+.landing-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 6rem 1.5rem 3rem;
+  position: relative;
+  z-index: 10;
+}
+
+.landing-hero-col {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.landing-planet-col {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .landing-hero-col  { width: 50%; }
+  .landing-planet-col {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+  }
+}
+
+/* ── Gradient Text ── */
+.gradient-text {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: linear-gradient(135deg, #c084fc 0%, #e879f9 50%, #c084fc 100%);
+  background-size: 200% auto;
+  animation: gradient-shift 4s linear infinite;
+}
+
+@keyframes gradient-shift {
+  to { background-position: 200% center; }
+}
+
+/* ── Star Glow Utility ── */
+.star-glow {
+  filter: blur(1px);
+  box-shadow: 0 0 8px #fff, 0 0 12px rgba(168, 85, 247, 0.7);
+}
+
+/* ── Planet Ring ── */
+.planet-ring {
+  transform-style: preserve-3d;
+  transform: rotateX(75deg);
+}
+
+/* ── Neon Text ── */
+.neon-purple {
+  color: #ffffff;
+  text-shadow:
+    0 0 5px rgba(168, 85, 247, 0.5),
+    0 0 10px rgba(168, 85, 247, 0.3),
+    0 0 15px rgba(168, 85, 247, 0.1);
+}
+
+/* ── Floating Animation ── */
+.floating { animation: float 6s ease-in-out infinite; }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* ── Badge Pill ── */
+.landing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 1rem;
+  border-radius: 9999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #d8b4fe;
+  background: rgba(147, 51, 234, 0.12);
+  border: 1px solid rgba(147, 51, 234, 0.25);
+  backdrop-filter: blur(6px);
+  margin-bottom: 1.25rem;
+}
+.landing-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #a855f7;
+  box-shadow: 0 0 6px #a855f7;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(1.4); }
+}

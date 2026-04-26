@@ -1,6 +1,8 @@
 # Motion Kit - Arquitectura y Estructura del Código
 
-## 📋 Tabla de Contenidos
+![Landing Page](./public/img/landing.png)
+
+## Tabla de Contenidos
 
 - [Visión General de la Arquitectura](#visión-general-de-la-arquitectura)
 - [Estructura de Directorios](#estructura-de-directorios)
@@ -11,40 +13,43 @@
 - [Gestión de Estilos](#gestión-de-estilos)
 - [Componentes Compartidos](#componentes-compartidos)
 
-## 🏗️ Visión General de la Arquitectura
+## Visión General de la Arquitectura
 
-Motion Kit está construido siguiendo una **arquitectura modular por features**, donde cada funcionalidad principal está encapsulada en su propio módulo independiente. Esta aproximación facilita:
+Motion Kit está construido siguiendo una arquitectura inspirada en **Feature-Sliced Design (FSD)**, donde las funcionalidades se dividen en capas claramente definidas (Core, Shared, Features). Esta aproximación facilita:
 
-- **Escalabilidad**: Fácil agregar nuevas características
+- **Escalabilidad**: Fácil agregar nuevas características y mantener el estado global
 - **Mantenibilidad**: Código organizado y fácil de localizar
-- **Reutilización**: Componentes modulares y independientes
-- **Colaboración**: Equipos pueden trabajar en features separados
+- **Reutilización**: Componentes de UI atómicos independientes
+- **Rendimiento**: Carga diferida y manejo de estado optimizado (ej. Zustand)
 
 ### Stack Tecnológico
 
 ```
-React + Vite + Framer Motion + React Router + Tailwind CSS
+React + Vite + Framer Motion + React Router + Tailwind CSS + Zustand + Fuse.js
 ```
 
-## 📁 Estructura de Directorios
+## Estructura de Directorios
 
 ```
 src/
-├── features/               # Módulos por funcionalidad
-│   ├── landing-feature/    # Página de aterrizaje
-│   ├── layout-feature/     # Layout principal y navegación
+├── core/                  # Capa principal (Layouts, Stores globales, Buscador)
+│   ├── search/            # Sistema de búsqueda global distribuido (Command Palette)
+│   ├── store/             # Estados globales con Zustand (ej. useSearchStore)
+│   └── ui/                # Layouts principales y envoltorios estructurales
+├── features/              # Módulos por funcionalidad
+│   ├── landing-feature/   # Página de aterrizaje de alto rendimiento
 │   ├── home/              # Página de inicio con documentación
-│   ├── buttons/           # Componentes de botones animados
-│   ├── cards/             # Componentes de cards animadas
+│   ├── buttons/           # Componentes de botones animados (Mapeo Data-Driven)
+│   ├── cards/             # Componentes de cards animadas (Mapeo Data-Driven)
 │   ├── not-found/         # Página 404
 │   └── [other-features]/  # Otros módulos
-├── shared/                # Componentes compartidos
+├── shared/                # Componentes atómicos (UI compartida, hooks, transiciones)
 ├── routes.jsx            # Configuración de rutas
 ├── App.jsx              # Componente raíz
 └── main.jsx             # Punto de entrada
 ```
 
-## 🎯 Organización por Features
+## Organización por Features
 
 Cada feature sigue una estructura consistente que promueve la modularidad y facilita el mantenimiento:
 
@@ -85,7 +90,7 @@ buttons/
 └── index.jsx                  # Vista principal de botones
 ```
 
-## 🔧 Patrones de Diseño
+## Patrones de Diseño
 
 ### 1. **Separación de Responsabilidades**
 
@@ -141,7 +146,7 @@ const DeleteButton = () => (
 );
 ```
 
-## 📝 Convenciones de Código
+## Convenciones de Código
 
 ### Nomenclatura de Archivos
 
@@ -210,25 +215,28 @@ import { animations } from './utils/animations';
 import { data } from '../data/componentData';
 ```
 
-## 🔄 Flujo de Datos
+## Flujo de Datos
 
 ### Arquitectura de Estado
 
+El proyecto utiliza **Zustand** para manejar el estado global de forma ligera y sin re-renderizados innecesarios, combinado con un patrón de registro distribuido para el buscador.
+
 ```
 App.jsx
-├── Layout (Global State)
+├── Core Layout (Zustand Global State / SearchModal)
 │   ├── Navbar (Local State)
 │   ├── Sidebar (Local State)
 │   └── Main Content
-│       └── Feature Components (Local State)
+│       └── Feature Components (Data-Driven mapping, Local State)
 └── Routes
 ```
 
 ### Gestión de Estado por Niveles
 
-1. **Estado Global**: Configuraciones de la aplicación, tema, usuario
-2. **Estado de Feature**: Datos específicos del módulo
-3. **Estado de Componente**: Estado local y temporal
+1. **Estado Global (Zustand)**: Sistema de búsqueda global (Command Palette), temas.
+2. **Registro de Búsqueda Distribuido**: Cada conjunto de componentes exporta sus metadatos a `core/search/registry`.
+3. **Estado de Feature**: Datos específicos del módulo, manejados a menudo mediante mapeo estático (`data.jsx`).
+4. **Estado de Componente**: Estado local y temporal de cada animación y componente atómico.
 
 ```jsx
 // Ejemplo de flujo de datos en Layout
@@ -246,7 +254,7 @@ const Layout = () => {
 };
 ```
 
-## 🎨 Gestión de Estilos
+## Gestión de Estilos
 
 ### Jerarquía de Estilos
 
@@ -284,7 +292,7 @@ const Layout = () => {
 --gray-medium: #374151;
 ```
 
-## 🔧 Componentes Compartidos
+## Componentes Compartidos
 
 ### Ubicación: `src/shared/`
 
@@ -316,7 +324,7 @@ const ComponentCard = ({
 };
 ```
 
-## 🚀 Extensibilidad
+## Extensibilidad
 
 ### Agregar un Nuevo Feature
 
@@ -340,7 +348,7 @@ mkdir src/features/nuevo-feature/data
 
 
 
-### 🔍 Principios Aplicados
+### Principios Aplicados
 
 - **Single Responsibility**: Cada archivo tiene una responsabilidad clara
 - **DRY (Don't Repeat Yourself)**: Componentes reutilizables
